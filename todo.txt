@@ -1,0 +1,10 @@
+https://api.spoonacular.com/recipes/complexSearch?apiKey=cdf510754c3541e8a42f14b7384540d1&instructionsRequired=true&fillIngredients=true&addRecipeInformation=true&number=1&query=chicken
+
+
+Let users specify these search parameters:
+
+  type : main course, dessert, soup, snack, appetizer,side dish
+  intolerances ( 3 rows of radio buttons)
+  maxReadyTime (slider)
+
+Then show 3-5 suggestions for the user to choose from

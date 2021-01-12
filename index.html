@@ -1,0 +1,21 @@
+<html lang="en">
+  <head>
+    <title>Recipe App</title>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" >
+    <meta name="apple-mobile-web-app-capable" content="yes" >
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/public/styles.css">
+    <!--preload assets -->
+    <link rel="preload" href="/public/views.js" as="script"  crossorigin="anonymous">
+    <link rel="preload" href="/public/data.js" as="script"  crossorigin="anonymous">
+    <!--defer assets -->
+    <script defer src="dependencies/mithril.min.js"></script>
+    <script defer src="dependencies/idb.js"></script>
+    <script defer type="module" src="public/script.js"></script>
+  </head>
+  <body>
+    <!--root where the views are rendered -->
+    <div id="appRoot"></div>
+  </body>
+</html>
