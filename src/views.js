@@ -1,12 +1,13 @@
 /*****app views****/
 import {recipe,favorites,userInputs,lightbox,errorThrown} from './data.js';
-import {attachEventHandlers} from "./swipe.js";
+import {Swiper} from "./swipe.js";
 
 
 /**Compenents**/
 var header = {//header bar
   oncreate: ()=>{
-    attachEventHandlers();
+    var swipes = {left: lightbox.close}
+    var lightboxSwipe = new Swiper(document.getElementsByClassName("lightbox")[0],swipes)
   },
   view: ()=>{
     return m(".header",[

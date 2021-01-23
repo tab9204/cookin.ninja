@@ -1,55 +1,61 @@
-import {lightbox} from './data.js';
-
-var initialX = null;
-var initialY = null;
-
-function attachEventHandlers(){
-  var lightbox =  document.getElementsByClassName("lightbox")[0];
-  //swipe commands
-  lightbox.addEventListener("touchstart", startTouch);
-  lightbox.addEventListener("touchmove", moveTouch);
-
-};
-
-function startTouch(e) {
-  initialX = e.touches[0].clientX;
-  initialY = e.touches[0].clientY;
-};
-
-function moveTouch(e) {
-  if (initialX === null) {
-    return;
+//element => the html element to attach the swipe commands to
+//swipes => object containing the functions to run on left, right, up, and down swipes
+class Swiper {
+  constructor(element, swipes) {
+    this.element = element;
+    this.swipes = swipes;
+    this.initialX = null;
+    this.initialY = null;
+    this.attachEventHandlers();
   }
-  if (initialY === null) {
-    return;
+  attachEventHandlers(){//attached event handlers
+    //swipe commands
+    this.element.addEventListener("touchstart", (event) => this.startTouch(event));
+    this.element.addEventListener("touchmove", (event) => this.moveTouch(event,this.swipes));
+
   }
-  var currentX = e.touches[0].clientX;
-  var currentY = e.touches[0].clientY;
-  var diffX = initialX - currentX;
-  var diffY = initialY - currentY;
-  if (Math.abs(diffX) > Math.abs(diffY)) {
-    // sliding horizontally
-    if (diffX > 0) {
-      // swiped left
-      console.log("swiped left");
-      lightbox.close();
-    } else {
-      // swiped right
-      console.log("swiped right");
+  startTouch(e) {
+    this.initialX = e.touches[0].clientX;
+    this.initialY = e.touches[0].clientY;
+  }
+  moveTouch(e,swipes) {
+    if (this.initialX === null) {
+      return;
     }
-  } else {
-    // sliding vertically
-    if (diffY > 0) {
-      // swiped up
-        console.log("swiped up");
-    } else {
-      // swiped down
-      console.log("swiped down");
+    if (this.initialY === null) {
+      return;
     }
-  }
-  initialX = null;
-  initialY = null;
-  e.preventDefault();
-};
 
-export{attachEventHandlers};
+    var currentX = e.touches[0].clientX;
+    var currentY = e.touches[0].clientY;
+    var diffX = this.initialX - currentX;
+    var diffY = this.initialY - currentY;
+
+    if (Math.abs(diffX) > Math.abs(diffY)) {
+      // sliding horizontally
+      if (diffX > 0 && swipes.left) {
+        // swiped left
+        swipes.left();
+      } else if(swipes.right) {
+        // swiped right
+        swipes.right();
+      }
+    } else {
+      // sliding vertically
+      if (diffY > 0 && swipes.up) {
+        // swiped up
+        swipes.up();
+      } else if(swipes.down) {
+        // swiped down
+        swipes.down();
+      }
+    }
+
+    this.initialX = null;
+    this.initialY = null;
+    e.preventDefault();
+  }
+}
+
+
+export{Swiper};
