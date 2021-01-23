@@ -22,5 +22,8 @@
     "webpack-dev-server": "^3.11.2",
     "http-server": "^0.12.3",
     "idb": "^5.0.8"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
   }
 }
