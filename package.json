@@ -9,8 +9,7 @@
   "type": "module",
   "scripts": {
     "watch": "webpack --mode development --watch",
-    "start": " webpack --mode development && http-server -p 8888 ./",
-    "build": "webpack --mode production"
+    "start": " webpack --mode development && node server.js",
   },
   "author": "",
   "license": "ISC",
