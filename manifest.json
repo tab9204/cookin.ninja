@@ -1,0 +1,15 @@
+{
+  "short_name": "RecipeApp",
+  "name": "Recipe App",
+  "icons": [
+    {
+      "src": "assets/loading.gif",
+      "sizes": "192x192",
+      "type": "image/jpg"
+    }
+  ],
+  "background_color": "#73f0af",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait"
+}

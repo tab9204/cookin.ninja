@@ -1,8 +1,54 @@
-importScripts('./dependencies/idb.js');
+importScripts('./libraries/idb.js');
+
+var cacheName = 'offlineCache-v0';
+var contentToCache = [
+  'offline.html',
+  '/manifest.json',
+  '/libraries/idb.js',
+  '/libraries/mithril.min.js',
+  '/assets/WorkSans-VariableFont_wght.ttf',
+  '/assets/back.png',
+  '/assets/forward.png',
+  '/assets/favoritedIcon.png',
+  '/assets/notFavoritedIcon.png',
+  '/assets/savedNavIcon.png',
+  '/assets/loading.gif',
+  '/src/styles.css',
+  '/build/offline-bundle.js',
+];
+
+
+self.addEventListener('install', (event) => {
+  console.log('Service Worker Installed');
+  event.waitUntil(
+    caches.open(cacheName).then((cache) => {
+      console.log('Service Worker Caching Files');
+      return cache.addAll(contentToCache);
+    })
+  );
+});
 
 self.addEventListener('activate', function(event) {
   event.waitUntil(
-    createDB()
+    createDB(),
+    caches.keys().then((keyList) => {
+      return Promise.all(keyList.map((key) => {
+        if(key !== cacheName) {
+          return caches.delete(key);
+        }
+      }));
+    })
+  );
+});
+
+self.addEventListener('fetch', (event) => {
+  var url = event.request;
+  event.respondWith(
+    caches.match(event.request).then(function(response) {//respond with cache first
+      return response || fetch(event.request);
+    }).catch(function(){
+      return caches.match('/offline.html');
+    })
   );
 });
 
