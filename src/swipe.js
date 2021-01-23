@@ -1,6 +1,6 @@
 //element => the html element to attach the swipe commands to
 //swipes => object containing the functions to run on left, right, up, and down swipes
-class Swiper {
+class swiper {
   constructor(element, swipes) {
     this.element = element;
     this.swipes = swipes;
@@ -58,4 +58,4 @@ class Swiper {
 }
 
 
-export{Swiper};
+export{swiper};
