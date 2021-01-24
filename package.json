@@ -4,12 +4,13 @@
   "engines": {
     "node": "10.16.0"
   },
+  "main": "index.js",
   "description": "",
   "type": "module",
   "scripts": {
     "watch": "webpack --mode development --watch",
     "start": "node server.js",
-    "postinstall": "webpack --mode production --config webpack.config.js --progress"
+    "postinstall": "webpack"
   },
   "author": "",
   "license": "ISC",
