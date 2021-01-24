@@ -8,9 +8,9 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "watch": "webpack --mode development --watch",
+    "dev": "webpack --mode development --watch",
     "start": "node server.js",
-    "postinstall": "webpack"
+    "build": "webpack --config webpack.config.js"
   },
   "author": "",
   "license": "ISC",
