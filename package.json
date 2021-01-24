@@ -9,7 +9,7 @@
   "scripts": {
     "watch": "webpack --mode development --watch",
     "start": " webpack --mode development && node server.js",
-    "heroku-postbuild": "webpack --mode production"
+    "heroku-postbuild": "webpack"
   },
   "author": "",
   "license": "ISC",
@@ -18,9 +18,7 @@
     "clean-webpack-plugin": "^3.0.0",
     "html-webpack-plugin": "^4.5.1",
     "http-server": "^0.12.3",
-    "idb": "^5.0.8"
-  },
-  "devDependencies": {
+    "idb": "^5.0.8",
     "@babel/core": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-react": "^7.12.10",
