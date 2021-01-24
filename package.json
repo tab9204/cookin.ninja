@@ -8,8 +8,8 @@
   "type": "module",
   "scripts": {
     "watch": "webpack --mode development --watch",
-    "start": " webpack --mode development && node server.js",
-    "heroku-postbuild": "webpack"
+    "start": "webpack --mode development && node server.js",
+    "heroku-postbuild": "webpack --mode development"
   },
   "author": "",
   "license": "ISC",
