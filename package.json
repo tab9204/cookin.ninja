@@ -7,11 +7,6 @@
   "description": "",
   "main": "index.js",
   "type": "module",
-  "scripts": {
-    "watch": "webpack --mode development --watch",
-    "start": " webpack --mode development && node server.js",
-    "heroku-postbuild": "webpack --mode production"
-  },
   "author": "",
   "license": "ISC",
   "dependencies": {
