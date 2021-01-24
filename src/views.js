@@ -1,6 +1,6 @@
 /*****app views****/
-import {recipe,favorites,userInputs,lightbox,errorThrown} from 'data.js';
-import {Swiper} from "swipe.js";
+import {recipe,favorites,userInputs,lightbox,errorThrown} from './data.js';
+import {Swiper} from "./swipe.js";
 
 
 /**Compenents**/

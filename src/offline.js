@@ -1,4 +1,4 @@
-import {offlineScreen,loadScreen,errorScreen,recipeScreen} from 'views.js';
+import {offlineScreen,loadScreen,errorScreen,recipeScreen} from './views.js';
 
 window.onload = () =>{
   //set up the service worker once the page loads
