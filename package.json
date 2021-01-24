@@ -10,7 +10,7 @@
   "scripts": {
     "watch": "webpack --mode development --watch",
     "start": " webpack --mode development && node server.js",
-    "heroku-postbuild": "webpack -p"
+    "heroku-postbuild": "webpack"
   },
   "author": "",
   "license": "ISC",
