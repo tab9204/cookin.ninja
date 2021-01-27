@@ -24,7 +24,7 @@ var header = {//header bar
       ]),
       m(".lightboxBackground.hidden", {onclick: lightbox.close}),
       m("img.savedNavIcon",{src: "../assets/savedNavIcon.png", onclick: favorites.getAll}),
-      m(".centerText", "Recipe App")
+      m(".centerText", "cookin.ninja")
     ])
   }
 }
@@ -32,8 +32,8 @@ var header = {//header bar
 var headerBackBtn = {//header bar
   view: ()=>{
     return m(".header",[
-        m("img.backBtn", {alt: "navigate back",src: "../assets/back.png", onclick: userInputs.onBackBtnClick}),
-      m(".centerText", "Recipe App")
+        m("img.backBtn.fadeIn", {alt: "navigate back",src: "../assets/back.png", onclick: userInputs.onBackBtnClick}),
+      m(".centerText", "cookin.ninja")
     ])
   }
 }

@@ -97,6 +97,7 @@ var recipe = {
       favorites.showAsFavorited();
 
       window.location = "#!/recipe";//navigate to the recipe screen to show the recipe
+
     }).catch((error) =>{
       errorThrown = error;
       console.log(errorThrown);

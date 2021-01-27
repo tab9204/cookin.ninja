@@ -4,12 +4,11 @@
   "engines": {
     "node": "10.16.0"
   },
-  "main": "index.js",
   "description": "",
   "type": "module",
   "scripts": {
-    "dev": "webpack --mode development --watch",
-    "start": "node server.js",
+    "watch": "webpack --mode development --watch",
+    "start": " node server.js",
     "build": "webpack --config webpack.config.js"
   },
   "author": "",

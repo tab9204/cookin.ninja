@@ -2,7 +2,6 @@ const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
-  context: path.join(__dirname),
   resolve: {
     extensions: ['.js', '.json']
   },
@@ -14,4 +13,6 @@ module.exports = {
     path: path.resolve(__dirname, 'build'),
     filename: "[name]-bundle.js"
   },
+  mode: 'development',
+  devtool: 'inline-source-map'
 }
