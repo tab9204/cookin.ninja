@@ -13,7 +13,7 @@ var header = {//header bar
     return m(".header",[
       m(".lightbox", [
         m(".lightboxHeader", "Saved Recipes"),
-        favorites.all.map((item) => {//favorited recipes lightbox
+        favorites.all.map((item,i,array) => {//favorited recipes lightbox
           return m(".savedRecipe",{onclick: () =>{
             recipe.getRecipe(item.id);
           }},[

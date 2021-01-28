@@ -164,6 +164,8 @@ var favorites = {
       m.redraw();//redraw the view
     }).catch((e) =>{//there was an error reading the DB so return no results
       favorites.all =  [];
+      lightbox.open();
+      m.redraw();//redraw the view
     })
   },
   showAsFavorited: function(){//shows the favorited button

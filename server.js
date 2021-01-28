@@ -20,18 +20,18 @@ app.use('/src', express.static('src'));
 app.use('/', express.static('/'));
 
 //serve the html file
-app.use("/",function(req,res){
+app.get("/",function(req,res){
     res.sendFile(__dirname + '/index.html');
 });
 
-app.use("/manifest.json",function(req,res){
+app.get("/manifest.json",function(req,res){
     res.sendFile(__dirname + '/manifest.json');
 });
 
-app.use("/service-worker.js",function(req,res){
+app.get("/service-worker.js",function(req,res){
     res.sendFile(__dirname + '/service-worker.js');
 });
 
-app.use("/offline.html",function(req,res){
+app.get("/offline.html",function(req,res){
     res.sendFile(__dirname + '/offline.html');
 });
