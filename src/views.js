@@ -1,5 +1,5 @@
 /*****app views****/
-import {recipe,favorites,userInputs,lightbox,errorThrown} from './data.js';
+import {recipe,indexDB,userInputs,lightbox,errorThrown} from './data.js';
 import {Swiper} from "./swipe.js";
 
 
@@ -13,9 +13,9 @@ var header = {//header bar
     return m(".header",[
       m(".lightbox", [
         m(".lightboxHeader", "Saved Recipes"),
-        favorites.all.map((item,i,array) => {//favorited recipes lightbox
+        recipe.all.map((item,i,array) => {//favorited recipes lightbox
           return m(".savedRecipe",{onclick: () =>{
-            recipe.getRecipe(item.id);
+            indexDB.getRecipe(item.id);
           }},[
             m(".savedRecipeTitle",item.title),
             m("img.forwardImage",{src: "../assets/forward.png"})
@@ -23,7 +23,7 @@ var header = {//header bar
         )})
       ]),
       m(".lightboxBackground.hidden", {onclick: lightbox.close}),
-      m("img.savedNavIcon",{src: "../assets/savedNavIcon.png", onclick: favorites.getAll}),
+      m("img.savedNavIcon",{src: "../assets/savedNavIcon.png", onclick: indexDB.getAll}),
       m(".centerText", "cookin.ninja")
     ])
   }
@@ -62,7 +62,8 @@ var homeScreen = {//home screen
             m("div.slider")
           ])
         ]),
-        m(".recipeSearch.btn",{onclick: recipe.search}  ,"Search for recipe")
+        m(".recipeSearch.btn",{onclick: recipe.search}  ,"Search for recipe"),
+        m(errorPopup)
       ])
     ])
   }
@@ -80,6 +81,7 @@ var offlineScreen = {//home screen when offline
     ])
   }
 }
+var render = true;
 
 var recipeScreen = {//selected recipe screen
   view: ()=>{
@@ -91,8 +93,7 @@ var recipeScreen = {//selected recipe screen
         ]),
         m(".pageSection.favoriteSection.fadeIn", [
           m(".favoriteTitle",recipe.details.title),
-          m("img.favoriteImage",{src: recipe.favoriteIcon, onclick: recipe.favoriteFunction})
-          //oninit: (vnode) => {if (!('indexedDB' in window)) {vnode.attrs.className = "saved hidden";}}
+          m("img.favoriteImage",{src: recipe.favoriteIcon, onclick: recipe.favoriteFunction, class: render ? "" : "hidden"})
         ]),
         m(".pageSection.fadeIn", [
           m(".listTitle","Ingredients"),
@@ -105,7 +106,8 @@ var recipeScreen = {//selected recipe screen
           m(".directionList",recipe.details.directions.map((item) => {
              return m(".direction",item)
           }))
-        ])
+        ]),
+        m(errorPopup)
       ])
     ])
   }
@@ -124,18 +126,10 @@ var loadScreen ={//screen to show while requests are loaded
   }
 }
 
-var errorScreen = {//screen showing errors
-  oncreate: ()=>{
-    history.replaceState(null, "home", "#!/home");//update browers history to skip the loading screen if the back button is used
-  },
+var errorPopup = {//popup containing an error message should an error be thrown
   view: () =>{
-    return m("errorScreen.contentView",[
-      m(headerBackBtn),
-      m(".pageContent",[
-        m(".errorScreenText",errorThrown)
-      ])
-    ])
+    return m(".errorPopup",errorThrown.message)
   }
 }
 
-export{homeScreen,loadScreen,errorScreen,recipeScreen,offlineScreen};
+export{homeScreen,loadScreen,recipeScreen,offlineScreen};

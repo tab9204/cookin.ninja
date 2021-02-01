@@ -1,7 +1,6 @@
 /**********Data for rendering app views************/
 //error screen text
-var errorThrown = "";
-//recipe related functions and data
+//recipe screen related functions and data
 var recipe = {
   details:{//the details of the recipe returned by the api
     image: null,
@@ -12,6 +11,7 @@ var recipe = {
     directions: null,
     id: null
   },
+  all: [],//array of all favorited recipes
   favoriteIcon: null,//the image used for the favorite recipe icon
   favoriteFunction: null,//the function called when the favorite icon is clicked
   search: function() {//uses the api to serach and return a random recipe
@@ -74,15 +74,50 @@ var recipe = {
           recipe.details.image = URL.createObjectURL(blob);
 
           //since this is a new search the favorite button should be set to the  not favorited option
-          favorites.showAsNotFavorited();
+          recipe.showAsNotFavorited();
 
           window.location = "#!/recipe";//update the url to show the food screen
         });
     })
     .catch((error) =>{//show the error
-      errorThrown = error;
-      console.log(errorThrown);
-      window.location = "#!/error";
+      errorThrown.message = "Could not get a recipe at this time.";
+      window.location = "#!/home";
+      errorThrown.show();
+    })
+  },
+  showAsFavorited: function(){//shows the favorited button
+    recipe.favoriteIcon = "../assets/favoritedIcon.png";
+    recipe.favoriteFunction = indexDB.removeRecipe;
+  },
+  showAsNotFavorited: function(){//shows the not favorited button
+    recipe.favoriteIcon = "../assets/notFavoritedIcon.png";
+    recipe.favoriteFunction = indexDB.saveRecipe;
+  },
+  showAsLoading: function(){//shows the loading icon
+    recipe.favoriteIcon = "../assets/loading.gif";
+    recipe.favoriteFunction = null;
+  }
+}
+
+//IDB realated functions
+var indexDB = {
+  getAll: function(){//gets all recipes in the favorites database
+    idb.openDB('favorites', 1).then((db) =>{
+      var tx = db.transaction(['recipes'], 'readonly');
+      var store = tx.objectStore('recipes');
+      return store.getAll();
+    }).then((items) =>{
+      if(items.length <= 0){//if there is no results
+        recipe.all = [];
+      }
+      else{
+        recipe.all = items;//return the array of items from the db
+      }
+      lightbox.open();
+      m.redraw();//redraw the view
+    }).catch((e) =>{//there was an error reading the DB so return no results
+      errorThrown.message = "Saved recipes could not be retrieved.";
+      errorThrown.show();
     })
   },
   getRecipe: function(id){//gets the specified recipe from the database
@@ -94,18 +129,17 @@ var recipe = {
       recipe.details = item;//set the recipe details to be the saved recipe details
       recipe.details.image = URL.createObjectURL(recipe.details.imageBlob);
       //the favorite button should show as favorited
-      favorites.showAsFavorited();
+      recipe.showAsFavorited();
 
       window.location = "#!/recipe";//navigate to the recipe screen to show the recipe
 
     }).catch((error) =>{
-      errorThrown = error;
-      console.log(errorThrown);
-      window.location = "#!/error";
+      errorThrown.message = "Could not retrieve the saved recipe.";
+      errorThrown.show();
     })
   },
   saveRecipe: function(id){//adds the current recipe to the favorites database
-    favorites.showAsLoading();//show the loading gif
+    recipe.showAsLoading();//show the loading gif
     idb.openDB('favorites', 1).then((db) =>{
       var tx = db.transaction(['recipes'], 'readwrite');
       var store = tx.objectStore('recipes');
@@ -115,17 +149,18 @@ var recipe = {
     }).then(() =>{
       setTimeout(() =>{//make sure to wait at least 1 second before showing the new button
         //favroite button should now show as favorited
-        favorites.showAsFavorited();
+        recipe.showAsFavorited();
         m.redraw();//view needs to be redrawn
       }, 1000);
     }).catch((error) =>{
-      errorThrown = error;
-      console.log(errorThrown);
-      window.location = "#!/error";
+      errorThrown.message = "The recipe could not be saved to the database.";
+      errorThrown.show();
+      recipe.showAsNotFavorited();
+      m.redraw();//view needs to be redrawn
     })
   },
   removeRecipe: function(id){//deletes the current recipe from the favorites database
-    favorites.showAsLoading();//show the loading gif on button click
+    recipe.showAsLoading();//show the loading gif on button click
     idb.openDB('favorites', 1).then((db) =>{
       var tx = db.transaction(['recipes'], 'readwrite');
       var store = tx.objectStore('recipes');
@@ -134,51 +169,15 @@ var recipe = {
     }).then((x) =>{
       setTimeout(() =>{//make sure to wait at least 1 second before showing the new button
         //favorite button should now show as not favorited
-        favorites.showAsNotFavorited();
+        recipe.showAsNotFavorited();
         m.redraw();//view needs to be redrawn
       }, 1000);
     }).catch((error) =>{
-      errorThrown = error;
-      console.log(errorThrown);
-      window.location = "#!/error";
+      errorThrown.message = "Error accessing the database.";
+      errorThrown.show();
+      recipe.showAsFavorited();
+      m.redraw();//view needs to be redrawn
     })
-  },
-}
-
-//favorited recipe functions and data
-var favorites = {
-  all: [],//array of all favorited recipes
-  getAll: function(){//gets all recipes in the favorites database
-    idb.openDB('favorites', 1).then((db) =>{
-      var tx = db.transaction(['recipes'], 'readonly');
-      var store = tx.objectStore('recipes');
-      return store.getAll();
-    }).then((items) =>{
-      if(items.length <= 0){//if there is no results
-        favorites.all = [];
-      }
-      else{
-        favorites.all = items;//return the array of items from the db
-      }
-      lightbox.open();
-      m.redraw();//redraw the view
-    }).catch((e) =>{//there was an error reading the DB so return no results
-      favorites.all =  [];
-      lightbox.open();
-      m.redraw();//redraw the view
-    })
-  },
-  showAsFavorited: function(){//shows the favorited button
-    recipe.favoriteIcon = "../assets/favoritedIcon.png";
-    recipe.favoriteFunction = recipe.removeRecipe;
-  },
-  showAsNotFavorited: function(){//shows the not favorited button
-    recipe.favoriteIcon = "../assets/notFavoritedIcon.png";
-    recipe.favoriteFunction = recipe.saveRecipe;
-  },
-  showAsLoading: function(){//shows the loading icon
-    recipe.favoriteIcon = "../assets/loading.gif";
-    recipe.favoriteFunction = null;
   }
 }
 
@@ -222,5 +221,17 @@ var lightbox = {//closes the favorite recipe lightbox section
   }
 }
 
+var errorThrown = {
+  message: "Test message",
+  show: function(){
+    var popup = document.getElementsByClassName("errorPopup ")[0];
+    m.redraw();
+    popup.classList.add("fadeInAndOut");//add the animation class back
+    popup.onanimationend = (e)=>{
+      popup.classList.remove("fadeInAndOut");//when the animation ends remove the class
+    }
+  }
+}
 
-export{recipe,favorites,userInputs,lightbox,errorThrown};
+
+export{recipe,indexDB,userInputs,lightbox,errorThrown};

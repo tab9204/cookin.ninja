@@ -30,7 +30,7 @@ self.addEventListener('install', (event) => {
 
 self.addEventListener('activate', function(event) {
   event.waitUntil(
-    createDB(),
+    //createDB(),
     caches.keys().then((keyList) => {
       return Promise.all(keyList.map((key) => {
         if(key !== cacheName) {

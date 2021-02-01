@@ -21,6 +21,8 @@ body{margin: 0px; overflow: hidden; font-family: 'Work Sans', sans-serif;}
             .forwardImage{height: 19px;}
           .closeBtn{text-align: center;}
 
+        .errorPopup{ position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); margin-bottom: 5px; padding: 5px; width: 250px; background: #f06e6e; border-radius: 4px; border: 1px solid black; opacity: 0; pointer-events: none}
+
       homeScreen .pageContent{justify-content: start;}
         .inputList{display: flex; flex-direction: row; flex-wrap: wrap; position: relative; transform: translateX(-50%); left: 50%; width: 300px;}
           .inputItem{padding: 7px; width: 76px; height: 34px; margin: 4px; text-align: center; line-height: 34px;}
@@ -117,6 +119,23 @@ input:checked + .slider:before {
 
 .fadeIn{animation-name:fadeIn; animation-delay: 0s; animation-duration:1.0s; animation-fill-mode: forwards;}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+.fadeInAndOut{animation-name:fadeInAndOut; animation-delay: 0s; animation-duration:5.0s; animation-direction:alternate; animation-fill-mode: backwards;}
+@keyframes fadeInAndOut{
+  0% {
+    opacity:0;
+  }
+  25% {
+    opacity:1;
+  }
+  75% {
+    opacity:1;
+  }
+  100% {
+    opacity:0;
+  }
+}
+
 
 /* vietnamese */
 @font-face {

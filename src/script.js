@@ -1,4 +1,4 @@
-import {homeScreen,loadScreen,errorScreen,recipeScreen} from './views.js';
+import {homeScreen,loadScreen,recipeScreen} from './views.js';
 
 window.onload = () =>{
   //set up the service worker once the page loads
@@ -12,8 +12,7 @@ window.onload = () =>{
   m.route(root, "/home",{
     "/home": homeScreen,
     "/load": loadScreen,
-    "/error": errorScreen,
-    "/recipe": recipeScreen,
+    "/recipe": recipeScreen
   })
 
 }
