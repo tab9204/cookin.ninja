@@ -1,6 +1,6 @@
 importScripts('./libraries/idb.js');
 
-var cacheName = 'offlineCache-v1';
+var cacheName = 'offlineCache-v2';
 var contentToCache = [
   'offline.html',
   '/manifest.json',
@@ -30,7 +30,7 @@ self.addEventListener('install', (event) => {
 
 self.addEventListener('activate', function(event) {
   event.waitUntil(
-    //createDB(),
+    createDB(),
     caches.keys().then((keyList) => {
       return Promise.all(keyList.map((key) => {
         if(key !== cacheName) {
@@ -56,6 +56,7 @@ function createDB() {
   idb.openDB('favorites', 1, {
     upgrade(db){
       db.createObjectStore('recipes', {keyPath: 'id'});
+      console.log("database created");
     }
   });
 }

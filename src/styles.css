@@ -17,7 +17,7 @@ body{margin: 0px; overflow: hidden; font-family: 'Work Sans', sans-serif;}
         .lightboxBackground{position: absolute; height: 100%; width: 100%; background: rgba(0,0,0,0.2); z-index: 1; left: 0; top: 0;}
         .lightboxHeader{text-align: center; font-size: 1.5em; border-bottom: 1px solid black; padding: 5px;}
           .savedRecipe{padding: 8px; display: flex;}
-            .savedRecipeTitle{width: 221px;}
+            .savedRecipeTitle{width: 221px; min-height: 45px;}
             .forwardImage{height: 19px;}
           .closeBtn{text-align: center;}
 
