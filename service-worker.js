@@ -1,10 +1,10 @@
-importScripts('./libraries/idb.js');
+importScripts('./libraries/idb.min.js');
 
-var cacheName = 'offlineCache-v2';
+var cacheName = 'offlineCache-v3';
 var contentToCache = [
   'offline.html',
   '/manifest.json',
-  '/libraries/idb.js',
+  '/libraries/idb.min.js',
   '/libraries/mithril.min.js',
   '/assets/WorkSans-VariableFont_wght.ttf',
   '/assets/back.png',

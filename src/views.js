@@ -44,25 +44,25 @@ var homeScreen = {//home screen
       m(header),
       m(".pageContent",[
         m(".pageSection", [
-          m(".sectionHeader","Recipe type"),
+          m(".sectionHeader","What's cookin?"),
           m(".inputList",userInputs.types.map((item) => {
              return m(".btn.inputItem.recipeType",{onclick: (e)=>{userInputs.onTypesClick(e)}, data: item.value},item.text)
           }))
         ]),
         m(".pageSection", [
-          m(".sectionHeader","Intolerances"),
+          m(".sectionHeader","Got any intolerances?"),
           m(".inputList",userInputs.intolerances.map((item) => {
              return m(".btn.inputItem.intolerance",{onclick: (e)=>{userInputs.onIntoleranceClick(e)}},item)
           }))
         ]),
         m(".pageSection.switchSection", [
-          m(".sectionHeader", "30 minutes or less"),
+          m(".sectionHeader", "Quick recipes only?"),
           m("label.switch",[
             m("input", {type: "checkbox"}),
             m("div.slider")
           ])
         ]),
-        m(".recipeSearch.btn",{onclick: recipe.search}  ,"Search for recipe"),
+        m(".recipeSearch",{onclick: recipe.search}  ,"Find a recipe"),
         m(errorPopup)
       ])
     ])
