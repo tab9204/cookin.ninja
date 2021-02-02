@@ -1,6 +1,6 @@
 importScripts('./libraries/idb.min.js');
 
-var cacheName = 'offlineCache-v3';
+var cacheName = 'offlineCache-v4';
 var contentToCache = [
   'offline.html',
   '/manifest.json',
@@ -13,6 +13,7 @@ var contentToCache = [
   '/assets/notFavoritedIcon.png',
   '/assets/savedNavIcon.png',
   '/assets/loading.gif',
+  '/assets/app_icon.jpg',
   '/src/styles.css',
   '/build/offline-bundle.js',
 ];

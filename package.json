@@ -9,7 +9,7 @@
   "scripts": {
     "watch": "webpack --mode development --watch",
     "start": " node server.js",
-    "build": "webpack --config webpack.config.js"
+    "build": "webpack --mode production --config webpack.config.js"
   },
   "author": "",
   "license": "ISC",

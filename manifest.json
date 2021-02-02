@@ -3,7 +3,7 @@
   "name": "Recipe App",
   "icons": [
     {
-      "src": "assets/loading.gif",
+      "src": "assets/app_icon.jpg",
       "sizes": "192x192",
       "type": "image/jpg"
     }
