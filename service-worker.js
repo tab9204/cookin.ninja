@@ -1,6 +1,6 @@
 importScripts('./libraries/idb.min.js');
 
-var cacheName = 'offlineCache-v4';
+var cacheName = 'offlineCache-v5';
 var contentToCache = [
   'offline.html',
   '/manifest.json',

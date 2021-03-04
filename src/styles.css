@@ -9,7 +9,7 @@ body{margin: 0px; overflow: hidden; font-family: 'Work Sans', sans-serif;}
       .header{background: #73f0af; font-size: 2em;padding: 5px;}
         .backBtn{position: absolute; width: 40px;}
         .header .savedNavIcon{position: absolute; left:5px;}
-      .pageContent{max-width: 480px; height: 100%; position: relative; left: 50%; transform: translate(-50%); display: flex;flex-direction: column; overflow-y: auto;}
+      .pageContent{max-width: 480px; height: 100%; position: relative; left: 50%; transform: translate(-50%); display: flex;flex-direction: column;}
         .pageContent .pageSection{margin: 17px 10px 17px 10px;}
           .sectionHeader{font-size: 1.3em;}
 
@@ -28,7 +28,8 @@ body{margin: 0px; overflow: hidden; font-family: 'Work Sans', sans-serif;}
           .inputItem{padding: 7px; width: 76px; height: 34px; margin: 4px; text-align: center; line-height: 34px;}
         .recipeSearch{ width: 100%; padding: 13px; align-self: center; font-size: 2em; background: #75DEF0; position: absolute; bottom: 0; text-align: center;}
 
-        recipeScreen .pageSection{opacity: 0;}
+      recipeScreen .pageContent{overflow-y: auto; overflow-x:hidden;}  
+      recipeScreen .pageSection{opacity: 0;}
       recipeScreen .listTitle{margin-bottom: 15px; font-size: 1.2em;}
           .ingredient, .direction{margin:15px 0 15px 0;}
         .favoriteSection{display: flex; justify-content: space-between;}

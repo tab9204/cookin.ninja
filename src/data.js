@@ -1,5 +1,4 @@
 /**********Data for rendering app views************/
-//error screen text
 //recipe screen related functions and data
 var recipe = {
   details:{//the details of the recipe returned by the api
@@ -14,20 +13,18 @@ var recipe = {
   all: [],//array of all favorited recipes
   favoriteIcon: null,//the image used for the favorite recipe icon
   favoriteFunction: null,//the function called when the favorite icon is clicked
+  loadingError: false,//flag for if an error was thrown while the recipe search loads
   search: function() {//uses the api to serach and return a random recipe
     window.location = "#!/load";//show the load screen while waiting for the api result
     //get the selected recipe type
     //if none are selected leave it blank
     var recipeType = document.querySelectorAll(".inputItem.recipeType.selected").length >= 1 ? document.querySelectorAll(".inputItem.recipeType.selected")[0].attributes.data.value : "";
+
     //get the selected intolerances
-    var intolerances = "";
-    var selectedIntolerances = document.querySelectorAll(".inputItem.intolerance.selected");
-    selectedIntolerances.forEach((item, i) => {
-      if(i <= 0){intolerances += item.textContent}//add the first intolerance without a comma
-      else{intolerances += ","+item.textContent}
-    });
+    var intolerances = document.querySelectorAll("input.dairy")[0].checked ? "Dairy" : "";
+
     //get the 30 min and under checkbox
-    var maxTime = document.querySelectorAll("input")[0].checked ? 20 : 300;
+    var maxTime = document.querySelectorAll("input.quick")[0].checked ? 30 : 300;
 
     m.request({//api call
       method: "GET",
@@ -39,7 +36,8 @@ var recipe = {
         addRecipeInformation:true,
         number:1,
         sort:"random",
-        type: recipeType,
+        query: recipeType,
+        type: "main course",
         intolerances:intolerances,
         maxReadyTime: maxTime
       }
@@ -80,9 +78,9 @@ var recipe = {
         });
     })
     .catch((error) =>{//show the error
-      errorThrown.message = "Could not get a recipe at this time.";
+      errorThrown.message = "Could not get a recipe.";
+      recipe.loadingError = true;
       window.location = "#!/home";
-      errorThrown.show();
     })
   },
   showAsFavorited: function(){//shows the favorited button
@@ -185,12 +183,12 @@ var indexDB = {
 var userInputs = {
   intolerances: ["Dairy","Egg","Gluten","Grain","Peanut","Seafood"],
   types: [
-    {text: "Main", value: "main course"},
-    {text: "Side Dish", value: "side dish"},
-    {text: "Appetizer", value: "appetizer"},
-    {text: "Soup", value: "soup"},
-    {text: "Dessert", value: "dessert"},
-    {text: "Snack", value: "snack"}
+    {text: "Breakfast", value: "breakfast"},
+    {text: "Curry", value: "curry"},
+    {text: "Pasta", value: "pasta"},
+    {text: "Salad", value: "salad"},
+    {text: "Sandwich", value: "sandwich"},
+    {text: "Soup", value: "soup"}
   ],
   onIntoleranceClick: function(e){
     e.target.classList.toggle("selected");
@@ -231,6 +229,10 @@ var errorThrown = {
       popup.classList.remove("fadeInAndOut");//when the animation ends remove the class
     }
   }
+}
+
+function getRandom(max){
+  return Math.floor(Math.random() * Math.floor(max));
 }
 
 

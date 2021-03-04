@@ -39,6 +39,12 @@ var headerBackBtn = {//header bar
 }
 
 var homeScreen = {//home screen
+  oncreate: ()=>{
+    if(recipe.loadingError){
+      errorThrown.show();
+      recipe.loadingError = false;
+    }
+  },
   view: ()=>{
     return m("homeScreen.contentView",[
       m(header),
@@ -49,16 +55,17 @@ var homeScreen = {//home screen
              return m(".btn.inputItem.recipeType",{onclick: (e)=>{userInputs.onTypesClick(e)}, data: item.value},item.text)
           }))
         ]),
-        m(".pageSection", [
-          m(".sectionHeader","Got any intolerances?"),
-          m(".inputList",userInputs.intolerances.map((item) => {
-             return m(".btn.inputItem.intolerance",{onclick: (e)=>{userInputs.onIntoleranceClick(e)}},item)
-          }))
+        m(".pageSection.switchSection", [
+          m(".sectionHeader", "Exclude Dairy?"),
+          m("label.switch",[
+            m("input.dairy", {type: "checkbox"}),
+            m("div.slider")
+          ])
         ]),
         m(".pageSection.switchSection", [
           m(".sectionHeader", "Quick recipes only?"),
           m("label.switch",[
-            m("input", {type: "checkbox"}),
+            m("input.quick", {type: "checkbox"}),
             m("div.slider")
           ])
         ]),
@@ -120,7 +127,8 @@ var loadScreen ={//screen to show while requests are loaded
   view: () =>{
     return m("loadingScreen.contentView",[
       m(".pageContent",[
-        m("img.loadingImage",{src:"../assets/loading.gif"})
+        m("img.loadingImage",{src:"../assets/loading.gif"}),
+        m(errorPopup)
       ])
     ])
   }
