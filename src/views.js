@@ -91,6 +91,12 @@ var offlineScreen = {//home screen when offline
 var render = true;
 
 var recipeScreen = {//selected recipe screen
+  oncreate: ()=>{
+    if(recipe.loadingError){
+      errorThrown.show();
+      recipe.loadingError = false;
+    }
+  },
   view: ()=>{
     return m("recipeScreen.contentView",[
       m(headerBackBtn),
@@ -113,6 +119,9 @@ var recipeScreen = {//selected recipe screen
           m(".directionList",recipe.details.directions.map((item) => {
              return m(".direction",item)
           }))
+        ]),
+        m(".fadeIn", [
+          m(".similarSearch",{onclick: recipe.similar},"Find Similar Recipe"),
         ]),
         m(errorPopup)
       ])

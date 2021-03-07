@@ -83,6 +83,74 @@ var recipe = {
       window.location = "#!/home";
     })
   },
+  similar: function(){//uses the api to get a recipe similar to the current recipe
+    window.location = "#!/load";//show the load screen while waiting for the api result
+
+
+    m.request({//api call to get a similar recipe
+      method: "GET",
+      url: `https://api.spoonacular.com/recipes/${recipe.details.id}/similar`,
+      params: {
+        apiKey:"cdf510754c3541e8a42f14b7384540d1",
+        number:1
+      }
+    })
+    .then((result) =>{
+      //api call to get recipe details with the similar id returned
+      m.request({//api call to get a similar recipe
+        method: "GET",
+        url: `https://api.spoonacular.com/recipes/${result[0].id}/information`,
+        params: {
+          apiKey:"cdf510754c3541e8a42f14b7384540d1",
+          includeNutrition: true
+        }
+      })
+      .then((result) =>{
+        //parse the ingredients
+        var ingredients = [];
+        result.extendedIngredients.forEach((item, i) => {
+          ingredients.push(item.original);
+        });
+        //parse the directions
+        var directions = [];
+        result.analyzedInstructions[0].steps.forEach((item, i) => {
+          directions.push(item.step);
+        });
+        //fill out the details object with the returned data
+        recipe.details = {
+          title: result.title,
+          summary: result.summary,
+          ingredients: ingredients,
+          directions: directions,
+          id: result.id
+        };
+        //get the image from the url and return it as a blob
+        fetch(result.image)
+          .then(function(response) {
+            return response.blob()
+          })
+          .then(function(blob) {
+            recipe.details.imageBlob = blob;
+            //convert blog to url
+            recipe.details.image = URL.createObjectURL(blob);
+
+            recipe.showAsNotFavorited();
+
+            window.location = "#!/recipe";
+          });
+      })
+      .catch((error) =>{//show the error
+        errorThrown.message = "Could not get similar recipe details.";
+        recipe.loadingError = true;
+        window.location = "#!/recipe";
+      })
+    })
+    .catch((error) =>{//show the error
+      errorThrown.message = "Could not get a similar recipe.";
+      recipe.loadingError = true;
+      window.location = "#!/recipe";
+    })
+  },
   showAsFavorited: function(){//shows the favorited button
     recipe.favoriteIcon = "../assets/favoritedIcon.png";
     recipe.favoriteFunction = indexDB.removeRecipe;
